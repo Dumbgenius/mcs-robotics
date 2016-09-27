@@ -128,3 +128,29 @@ class MCSRobot():
 		#and take my position as the average
 		self.location = (get_average(locations_x), get_average(locations_y))
 		#and hey, i'm not sure if this code even works! but hopefully it does.
+
+	def test_speed_bursts(tests=10, seconds_per_test=1, test_speed=100):
+		"""This function drives the robot back and forwards in a straight line, and works out the average distance travelled from doing so."""
+		forward_distances = []
+		backward_distances = []
+		for x in range(tests):
+			get_position()
+			pos = self.position #get initial position
+			move_linear(seconds_per_test, test_speed) #move forward
+			get_position() #get new position
+			forward_distances.append(sqrt(self.position[0]**2 + self.position[1]**2)) #and get the distance
+
+			#...and then do the same, but drive backwards
+			get_position()
+			pos = self.position
+			move_linear(seconds_per_test, -test_speed)
+			get_position()
+			backward_distances.append(sqrt(self.position[0]**2 + self.position[1]**2))
+
+		print("Forwards speed: "+get_average(forward_distances)+" metres per "+seconds_per_test+" second burst at motor speed "+test_speed+".")
+		print("Reverse speed: "+get_average(backward_distances)+" metres per "+seconds_per_test+" second burst at motor speed -"+test_speed+".")
+		print("Averaged from "+tests+" tests.")
+
+
+
+
