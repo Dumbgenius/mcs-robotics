@@ -1,5 +1,5 @@
 import mcsrobot
 
-SuperRobot = MCSRobot()
+SuperRobot = mcsrobot.MCSRobot()
 
 SuperRobot.start()
