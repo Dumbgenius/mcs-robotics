@@ -79,6 +79,8 @@ class MCSRobot():
 	"""The MCS Robot class. It holds all the robot's important variables and functions."""
 	def __init__(self):
 		self.R = Robot()
+		self.position = None
+		self.rotation = None
 
 	def start(self):
 		self.R.wait_start()
@@ -113,7 +115,7 @@ class MCSRobot():
 				#rot = m.rot_y + MARKER_DIRECTIONS(m.offset)
 				rotations.append(rot)
 		#then take my rotation as the average
-		my_rotation = get_average_angle(rotations)
+		self.rotation = get_average_angle(rotations)
 
 		#then get my position from each marker
 		for m in markers:
@@ -124,7 +126,5 @@ class MCSRobot():
 				locations_x.append(posx)
 				locations_y.append(posy)
 		#and take my position as the average
-		my_location = (get_average(locations_x), get_average(locations_y))
+		self.location = (get_average(locations_x), get_average(locations_y))
 		#and hey, i'm not sure if this code even works! but hopefully it does.
-
-
