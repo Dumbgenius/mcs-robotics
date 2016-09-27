@@ -1,4 +1,5 @@
 import math
+import time
 from sr.robot import *
 
 
@@ -91,7 +92,7 @@ class MCSRobot():
 		self.R.motors[0].m1.power = speed
 		self.R.motors[1].m0.power = speed
 		self.R.motors[1].m1.power = speed
-		sleep(seconds)
+		time.sleep(seconds)
 		self.R.motors[0].m0.power = 0
 		self.R.motors[0].m1.power = 0
 		self.R.motors[1].m0.power = 0
@@ -138,7 +139,7 @@ class MCSRobot():
 			pos = self.position #get initial position
 			move_linear(seconds_per_test, test_speed) #move forward
 			get_position() #get new position
-			forward_distances.append(sqrt(self.position[0]**2 + self.position[1]**2)) #and get the distance
+			forward_distances.append(sqrt((self.position[0]-pos[0])**2 + (self.position[1]-pos[1])**2)) #and get the distance
 
 			#...and then do the same, but drive backwards
 			get_position()
@@ -147,9 +148,35 @@ class MCSRobot():
 			get_position()
 			backward_distances.append(sqrt(self.position[0]**2 + self.position[1]**2))
 
-		print("Forwards speed: "+get_average(forward_distances)+" metres per "+seconds_per_test+" second burst at motor speed "+test_speed+".")
-		print("Reverse speed: "+get_average(backward_distances)+" metres per "+seconds_per_test+" second burst at motor speed -"+test_speed+".")
+		print("Forwards speed: "+(get_average(forward_distances)/seconds_per_test)+" metres per "+seconds_per_test+" second burst at motor speed "+test_speed+".")
+		print("Reverse speed: "+(get_average(backward_distances)/seconds_per_test)+" metres per "+seconds_per_test+" second burst at motor speed -"+test_speed+".")
 		print("Averaged from "+tests+" tests.")
+
+	def test_speed_continuous(seconds=5, delay=0.2, speed=100):
+		get_position()
+		start_time = time.time()
+		t = start_time
+		speeds = []
+
+		self.R.motors[0].m0.power = speed
+		self.R.motors[0].m1.power = speed
+		self.R.motors[1].m0.power = speed
+		self.R.motors[1].m1.power = speed
+
+		while (t < start_time+5):
+			pos = self.position #save position
+			time.sleep(delay) #wait (while moving forward)
+			get_position() #get new position
+			speeds.append(sqrt((self.position[0]-pos[0])**2 + (self.position[1]-pos[1])**2) / time.time()-t) #speed = displacement / time
+			t = time.time() #set time again
+
+		self.R.motors[0].m0.power = 0
+		self.R.motors[0].m1.power = 0
+		self.R.motors[1].m0.power = 0
+		self.R.motors[1].m1.power = 0
+
+		print("Speed: "+get_average(speeds)+"m/s at motor speed "+speed)
+
 
 
 
