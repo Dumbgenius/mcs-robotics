@@ -51,9 +51,7 @@ MARKER_DIRECTIONS = [
 ]
 
 def get_average(l):
-	total = 0
-	for i in l: total += i
-	return total/len(l)
+	return sum(l)/len(l)
 
 def get_average_angle(l):
 	totalx = 0
