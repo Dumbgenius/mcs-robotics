@@ -84,7 +84,7 @@ class MCSRobot():
 	def start(self):
 		self.R.wait_start()
 
-	def move_linear(self, seconds, speed):
+	def move_linear(self,seconds, speed):
 		#TODO: Change this code to utilise threading
 		self.R.motors[0].m0.power = speed
 		self.R.motors[0].m1.power = speed
@@ -95,19 +95,6 @@ class MCSRobot():
 		self.R.motors[0].m1.power = 0
 		self.R.motors[1].m0.power = 0
 		self.R.motors[1].m1.power = 0
-
-	def turn_seconds(self, seconds, speed):
-                #TODO: Change this code to utilise threading
-                self.R.motors[0].m0.power = speed
-                self.R.motors[0].m1.power = speed
-                self.R.motors[1].m0.power = -speed
-                self.R.motors[1].m1.power = -speed
-                time.sleep(seconds)
-                self.R.motors[0].m0.power = 0
-                self.R.motors[0].m1.power = 0
-                self.R.motors[1].m0.power = 0
-                self.R.motors[1].m1.power = 0
-
 
 	def get_position(self):
 		markers = self.R.see(res=(1280,720)) #biggest res that works on both cameras
