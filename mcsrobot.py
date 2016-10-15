@@ -51,9 +51,7 @@ MARKER_DIRECTIONS = [
 ]
 
 def get_average(l):
-	total = 0
-	for i in l: total += i
-	return total/len(l)
+	return sum(l)/len(l)
 
 def get_average_angle(l):
 	totalx = 0
@@ -87,7 +85,7 @@ class MCSRobot():
 		#self.R.wait_start()
 		self.test_speed_bursts(tests=5)
 
-	def move_linear(self, seconds, speed):
+	def move_linear(self,seconds, speed):
 		#TODO: Change this code to utilise threading
 		self.R.motors[0].m0.power = speed
 		self.R.motors[0].m1.power = speed
@@ -95,6 +93,7 @@ class MCSRobot():
 		self.R.motors[0].m0.power = 0
 		self.R.motors[0].m1.power = 0
 
+<<<<<<< HEAD
 	def turn_seconds(self, seconds, speed):
         #TODO: Change this code to utilise threading
 		self.R.motors[0].m0.power = speed
@@ -104,6 +103,8 @@ class MCSRobot():
 		self.R.motors[0].m1.power = 0
 
 
+=======
+>>>>>>> 1b91ea3c9fe004dd51978aaae1b65cb264b69ed8
 	def get_position(self):
 		markers = self.R.see(res=(1280,720)) #biggest res that works on both cameras
 		positions_x = []
